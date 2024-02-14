@@ -5,7 +5,6 @@ import { InputTextComponent } from '../../shared/components/forms/input-text/inp
 import { FormInputModel } from '../../core/models/form-input.model';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthorizationService } from '../../core/services/authorization/authorization.service';
-import { Firestore, addDoc, collection, collectionData } from '@angular/fire/firestore';
 import { TransactionService } from '../../core/services/transaction/transaction.service';
 
 @Component({
@@ -34,7 +33,6 @@ export class AuthenticationComponent {
     new FormInputModel("Password", "password",  'password', [], 'Password'),
     new FormInputModel("Confirm Password", "confirm_password",  'password', [], 'Confirm Password'),
   ];
-  fireStore = Inject(Firestore);
 
   constructor(
     private _formBuilder: FormBuilder,
