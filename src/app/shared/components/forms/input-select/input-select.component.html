@@ -1,0 +1,14 @@
+
+
+<div class="relative">
+  <div class="relative w-full flex flex-col" [formGroup]="form">
+    <select [formControlName]="inputData.id" class="Input_form_input rounded w-full border poppins-regular  !pl-[10px] !pt-[18px] focus:border-color-1 border-bdr-secondary h-12 z-10 relative outline-none p-3 text-[12px]" >
+      @for ( opt of inputData.options; track opt.id) {
+        <option [value]="opt.id">{{opt.name}}</option>
+      }
+    </select>
+    <label for=" " class="Input_form_label poppins-regular text-sm text-color-10 absolute left-4 top-4 poppin-regular transition-all duration-300 leading-4">{{inputData.label}}</label>
+  </div>
+  <span class="material-icons z-10 top-1/2 text-color-10 font-normal text-sm absolute !leading-none text-[20px] right-1" style="transform: translate(-50%, -50%);">unfold_more</span>
+</div>
+

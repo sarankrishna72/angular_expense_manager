@@ -1,0 +1,14 @@
+input[type="date"]::-webkit-calendar-picker-indicator {
+  content: url("/assets/images/calendar_month.png");
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}

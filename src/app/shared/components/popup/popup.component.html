@@ -1,0 +1,25 @@
+<div #model id="myModal" class="modal fixed left-0 top-0 w-full h-full overflow-auto z-50 hidden">
+  <!-- Modal content -->
+  <div class="modal-content max-tablet:w-10/12 {{_popupStoreService.config()?.popupClass }}">
+    <div class="popup-body {{_popupStoreService.config()?.modelContentClass }} max-h-[90vh] overflow-auto">
+      <app-card>
+        <div class="popup-header {{_popupStoreService.config()?.popupHeaderClass }} flex justify-center items-center">
+          <div class="p-3 poppins-medium text-xl">
+            {{_popupStoreService.config()?.title}}
+          </div>
+          <div class="absolute top-3 z-20 right-3">
+            <app-button (onClick)="_popupStoreService.dismiss()" class="!leading-none h-8 w-8 flex justify-center items-center">
+              <span class="material-icons text-sm !leading-none">close</span>
+            </app-button>
+          </div>
+        </div>
+        @if (_popupStoreService.show() ) {
+          <ng-container *ngComponentOutlet="
+            _popupStoreService.config().component;
+            inputs: _popupStoreService.config()?.componentProps;
+          " />
+        }
+      </app-card>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,80 @@
+
+<section id="dashboard" class="p-4 max-w-full">
+  <div class="mb-4 text-sm poppins-regular text-color-1">Hi, Welcome Sarathchandran</div>
+  <div
+    class="grid tablet:grid-cols-2 laptop:grid-cols-4 gap-4"
+  >
+    @for (card of cardData; track card.id) {
+      <app-card>
+        <div class="px-2">
+          <div>
+            <app-chip-label [title]="card.title"></app-chip-label>
+          </div>
+          <div class="grid grid-cols-2 mt-3">
+            <div>
+              <div class="text-color-5 text-xs  poppins-regular">This Month</div>
+              <b
+                class="poppins-semibold"
+                [ngClass]="{
+                  'text-color-7': (card.isIncome &&  card.currentMonth > card.lastMonth) || (!card.isIncome &&  card.currentMonth < card.lastMonth),
+                  'text-color-1': (card.isIncome &&  card.currentMonth < card.lastMonth) || (!card.isIncome &&  card.currentMonth > card.lastMonth),
+                  'text-black': card.currentMonth == card.lastMonth
+                }"
+              >{{card.currentMonth | currency}}</b>
+            </div>
+            <div>
+              <div class="text-color-5 text-xs  poppins-regular">Last Month</div>
+              <b
+                class="poppins-semibold"
+                [ngClass]="{
+                  'text-color-7': (card.isIncome && card.currentMonth < card.lastMonth) || (!card.isIncome &&  card.currentMonth > card.lastMonth),
+                  'text-color-1': (card.isIncome && card.currentMonth > card.lastMonth) || (!card.isIncome &&  card.currentMonth < card.lastMonth),
+                  'text-color-5': card.currentMonth == card.lastMonth
+                }"
+              >{{card.lastMonth | currency}}</b>
+            </div>
+          </div>
+          <div class="text-[11px] poppins-semibold mt-1" [ngClass]="
+            {
+              'text-color-7': (card.isIncome && card.getIncomePercentage() > 0) || (!card.isIncome && card.getIncomePercentage() < 0),
+              'text-color-1': (card.isIncome && card.getIncomePercentage() < 0 )|| (!card.isIncome && card.getIncomePercentage() > 0)
+            }
+          ">
+            {{ card.getIncomePercentage() | percent: '0.2'}}
+          </div>
+        </div>
+      </app-card>
+    }
+  </div>
+  <div class="mt-4">
+    <div class="flex max-laptop:flex-col-reverse gap-4">
+      <div class="laptop:w-8/12">
+        <app-card>
+          <app-chart [chartOptions]="chartOptions"></app-chart>
+        </app-card>
+        <app-card class="mt-4">
+          <div class="flex justify-end mb-2">
+            <app-button (onClick)="showPopup()">
+              <div class="flex items-center gap-1 ">
+                <span class="material-icons text-lg leading-none">add</span>
+                Add Transaction
+              </div>
+            </app-button>
+          </div>
+
+          <app-table></app-table>
+        </app-card>
+      </div>
+      <div class="flex laptop:w-4/12 flex-col gap-4">
+        <app-card>
+          <app-chart [chartOptions]="pieChartData"></app-chart>
+        </app-card>
+        <app-card>
+          <app-chart [chartOptions]="bulletChartData"></app-chart>
+        </app-card>
+      </div>
+    </div>
+  </div>
+
+
+</section>

@@ -1,0 +1,39 @@
+ <div class="container" #container id="container">
+    <div class="form-container sign-up">
+        <form [formGroup]="registerForm">
+            <h1 class="poppins-semibold text-lg mb-6">Create Account</h1>
+            @for ( formInput of formInputsRegister; track formInput.id) {
+              <div class="mb-4 w-full">
+                 <app-input-text [inputData]="formInput" [form]="registerForm"></app-input-text>
+              </div>
+
+            }
+            <app-button class="w-full">Sign Up</app-button>
+        </form>
+    </div>
+    <div class="form-container sign-in">
+        <form [formGroup]="form">
+            <h1  class="poppins-semibold text-lg mb-6">Sign In</h1>
+              @for ( formInput of formInputsLogin; track formInput.id) {
+                <div class="mb-4 w-full">
+                  <app-input-text [inputData]="formInput" [form]="form"></app-input-text>
+                </div>
+              }
+            <app-button class="w-full" (onClick)="onSubmitSignIn()">Sign In</app-button>
+        </form>
+    </div>
+    <div class="toggle-container">
+        <div class="toggle">
+            <div class="toggle-panel toggle-left">
+                <h1  class="poppins-semibold text-lg">Welcome Back!</h1>
+                <p class="poppins-regular">Enter your personal details to use all of site features</p>
+                <app-button class="hidden-btn px-5" (click)="login()">Sign In</app-button>
+            </div>
+            <div class="toggle-panel toggle-right">
+                <h1 class="poppins-semibold text-lg">Hello, Friend!</h1>
+                <p class="poppins-regular">Register with your personal details to use all of site features</p>
+                <app-button class="hidden-btn px-5" (onClick)="register()">Sign Up</app-button>
+            </div>
+        </div>
+    </div>
+</div>
