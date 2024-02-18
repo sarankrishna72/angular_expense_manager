@@ -15,7 +15,6 @@ import { ButtonComponent } from '../../shared/components/forms/button/button.com
 import { PopupStoreService } from '../../shared/components/popup/popup-store-service/popup-store.service';
 import { AddTransactionComponent } from '../../shared/components/add-transaction/add-transaction.component';
 import { TransactionService } from '../../core/services/transaction/transaction.service';
-import * as _ from 'lodash';
 import moment from 'moment';
 import { DEFAULT_DATA, TransactionForData } from '../../core/data/transaction-form';
 import { TRANSACTION_TABLE_COLUMNS } from '../../core/data/transaction-table-col';
@@ -23,6 +22,7 @@ import { totalAccountTypeExpenseCalculation } from '../../core/data/area-chart';
 import { FormInputModel } from '../../core/models/form-input.model';
 import { InputSelectComponent } from '../../shared/components/forms/input-select/input-select.component';
 import { TransactionModel } from '../../core/models/transaction.model';
+import { sumBy, filter, map, groupBy } from 'lodash';
 
 
 @Component({
@@ -66,29 +66,29 @@ export class DashboardComponent implements OnInit {
         }
         const month = moment(key).format('MMM')
         const incomes = this._transactionService.transactionsGroupByMonth()[key].filter((transaction: TransactionModel) => transaction.transaction_type ==  DEFAULT_DATA.INCOME && transaction.category_type != DEFAULT_DATA.FUND_TRANSFER)
-        const totalSarathIncomes = _.filter(incomes, { 'transaction_for': DEFAULT_DATA.SARATH });
-        const totalDevikaIncomes = _.filter(incomes, { 'transaction_for': DEFAULT_DATA.DEVIKA  });
-        const expenses = _.filter(this._transactionService.transactionsGroupByMonth()[key], { 'transaction_type': DEFAULT_DATA.EXPENSE });
-        const totalIncome = _.sumBy(incomes, 'amount');
-        const totalExpense = _.sumBy(expenses, 'amount');
-        targetData.unshift({month, totalSarathIncomes: _.sumBy(totalSarathIncomes, 'amount'), totalDevikaIncomes: _.sumBy(totalDevikaIncomes, 'amount') })
+        const totalSarathIncomes = filter(incomes, { 'transaction_for': DEFAULT_DATA.SARATH });
+        const totalDevikaIncomes = filter(incomes, { 'transaction_for': DEFAULT_DATA.DEVIKA  });
+        const expenses = filter(this._transactionService.transactionsGroupByMonth()[key], { 'transaction_type': DEFAULT_DATA.EXPENSE });
+        const totalIncome = sumBy(incomes, 'amount');
+        const totalExpense = sumBy(expenses, 'amount');
+        targetData.unshift({month, totalSarathIncomes: sumBy(totalSarathIncomes, 'amount'), totalDevikaIncomes: sumBy(totalDevikaIncomes, 'amount') })
         data.unshift({month, totalIncome, totalExpense})
 
         areaChartData.unshift({
           month,
-          chequings_account: _.sumBy(_.filter(expenses, { 'account_type': DEFAULT_DATA.CHEQUINGS }), 'amount'),
-          savings_account: _.sumBy(_.filter(expenses, { 'account_type': DEFAULT_DATA.SAVINGS }), 'amount'),
-          credits_account: _.sumBy(_.filter(expenses, { 'account_type': DEFAULT_DATA.CREDIT_CARD }), 'amount'),
+          chequings_account: sumBy(filter(expenses, { 'account_type': DEFAULT_DATA.CHEQUINGS }), 'amount'),
+          savings_account: sumBy(filter(expenses, { 'account_type': DEFAULT_DATA.SAVINGS }), 'amount'),
+          credits_account: sumBy(filter(expenses, { 'account_type': DEFAULT_DATA.CREDIT_CARD }), 'amount'),
         });
 
       }
       if (currentMonthData.length) {
-        const expenses = _.filter(currentMonthData, { 'transaction_type': DEFAULT_DATA.EXPENSE });
-        const expensesByCategory = _.groupBy(expenses, 'category_type');
-        categoryData = _.map(expensesByCategory, (categoryExpenses, categoryName) => {
+        const expenses = filter(currentMonthData, { 'transaction_type': DEFAULT_DATA.EXPENSE });
+        const expensesByCategory = groupBy(expenses, 'category_type');
+        categoryData = map(expensesByCategory, (categoryExpenses, categoryName) => {
           return {
             category: categoryName,
-            amount: _.sumBy(categoryExpenses, 'amount')
+            amount: sumBy(categoryExpenses, 'amount')
           };
         });
       }
