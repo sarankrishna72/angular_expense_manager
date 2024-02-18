@@ -6,6 +6,8 @@ import { FormInputModel } from '../../core/models/form-input.model';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthorizationService } from '../../core/services/authorization/authorization.service';
 import { TransactionService } from '../../core/services/transaction/transaction.service';
+import { base64Encode } from '../../core/utils';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-authentication',
@@ -28,16 +30,11 @@ export class AuthenticationComponent {
     new FormInputModel("Password", "password",  'password', [], 'Password'),
   ];
 
-  formInputsRegister: FormInputModel[] = [
-    new FormInputModel("Email", "email",  'email', [], 'Email'),
-    new FormInputModel("Password", "password",  'password', [], 'Password'),
-    new FormInputModel("Confirm Password", "confirm_password",  'password', [], 'Confirm Password'),
-  ];
-
   constructor(
     private _formBuilder: FormBuilder,
     private _authorizationService: AuthorizationService,
-    private _transactionService: TransactionService
+    private _transactionService: TransactionService,
+    private _router: Router
   ) {
     this.form = this._formBuilder.group({})
     this.registerForm = this._formBuilder.group({})
@@ -48,20 +45,17 @@ export class AuthenticationComponent {
     for (const formInput of this.formInputsLogin) {
       this.form.addControl(formInput.id, new FormControl("", [Validators.required]))
     }
-    for (const formInput of this.formInputsRegister) {
-      this.registerForm.addControl(formInput.id, new FormControl("", Validators.required))
-    }
+
   }
 
 
   onSubmitSignIn(): void {
-
+    this._authorizationService.signIn(this.form.value).then(response => {
+      localStorage.setItem("authorization", base64Encode(JSON.stringify(response.user)));
+      this._router.navigate(['/']);
+    })
   }
 
-
-  register() {
-    this.container.nativeElement.classList.add("active")
-  }
 
   login() {
     this.container.nativeElement.classList.remove("active")

@@ -1,0 +1,11 @@
+{
+  "hosting": [
+    {
+      "target": "expense-manager",
+      "source": ".",
+      "frameworksBackend": {
+        "region": "us-central1"
+      }
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-export const barChartConfiguration = () => {
+export const barChartForIncomeVsExpenseConfiguration = (data: any []) => {
   return  {
       autoSize: true,
       height: 400,
@@ -21,19 +21,12 @@ export const barChartConfiguration = () => {
           },
           label: {
             formatter: (params) => {
-              return `$${parseFloat(params.value)}`;
+              return `$${parseFloat(params.value).toFixed(2)}`;
             },
           },
         } ,
       ],
-      data: [
-        { month: 'Jan', totalIncome: 5014, totalExpense: 3250 },
-        { month: 'Mar', totalIncome: 6012, totalExpense: 3015 },
-        { month: 'May', totalIncome: 4688, totalExpense: 2987 },
-        { month: 'Jul', totalIncome: 4569, totalExpense: 3600 },
-        { month: 'Sep', totalIncome: 5642, totalExpense: 3200 },
-        { month: 'Nov', totalIncome: 6321, totalExpense: 3605 },
-      ],
+      data: data,
       series: [
         { type: 'bar', xKey: 'month', yKey: 'totalIncome', legendItemName: "Total Income",
           highlightStyle: {
@@ -42,10 +35,10 @@ export const barChartConfiguration = () => {
               stroke: ""
             }
           },
-          tooltip: {
-            renderer: (params) => {return `<div class="bg-white p-1 rounded-sm flex items-center justify-center">$${params.datum.totalIncome}</div>`;},
-            showArrow: false,
-          }
+          // tooltip: {
+          //   renderer: (params) => {return `<div class="bg-white p-1 rounded-sm flex items-center justify-center">$${params.datum.totalIncome.toFixed(2)}</div>`;},
+          //   showArrow: false,
+          // }
         },
         { type: 'bar', xKey: 'month',  yKey: 'totalExpense', legendItemName: "Total Expense",
           highlightStyle: {
@@ -53,10 +46,10 @@ export const barChartConfiguration = () => {
               strokeWidth: 0,
             }
           },
-          tooltip: {
-            renderer: (params) => {return `<div class="bg-white p-1 rounded-sm flex items-center justify-center">$${params.datum.totalExpense}</div>`},
-            showArrow: false,
-          }
+          // tooltip: {
+          //   renderer: (params) => {return `<div class="bg-white p-1 rounded-sm flex items-center justify-center">$${params.datum.totalExpense.toFixed(2)}</div>`},
+          //   showArrow: false,
+          // }
         }
       ]
     }

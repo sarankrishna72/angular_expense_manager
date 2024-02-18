@@ -105,6 +105,23 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "version": 2
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "expense-manager:build:production",
+              "serveTarget": "expense-manager:serve:production"
+            },
+            "development": {
+              "buildTarget": "expense-manager:build:development",
+              "serveTarget": "expense-manager:serve:development"
+            }
+          },
+          "defaultConfiguration": "production"
         }
       }
     }

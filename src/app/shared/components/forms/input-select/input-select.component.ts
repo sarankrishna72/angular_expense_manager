@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { FormInputModel } from '../../../../core/models/form-input.model';
 import { CommonModule } from '@angular/common';
 
@@ -16,4 +16,10 @@ import { CommonModule } from '@angular/common';
 export class InputSelectComponent {
   @Input() inputData: FormInputModel;
   @Input() form: FormGroup;
+  @Input() formCtrl: FormControl;
+  @Output() valueChanged: EventEmitter<any> = new EventEmitter();
+
+  changeValue(event: any) {
+    this.valueChanged.emit(event);
+  }
 }

@@ -1,39 +1,22 @@
-export const bulletChartData = () => {
+export const bulletForUserIncomeChartData = (data = []) => {
   return {
       title: {
-        text: "Target v/s Achievements",
+        text: "Income Earned By",
       },
       theme: "ag-polychroma",
-      data:[
-        {
-            month: 'Jan',
-            target: 7200,
-            achieve: 6500,
-        },
-        {
-            month: 'Feb',
-            target: 7300,
-            achieve: 6800,
-        },
-        {
-            month: 'Mar',
-            target: 7400,
-            achieve: 6300,
-        },
-
-    ],
+      data: data,
       series: [
         {
           type: "line",
           xKey: "month",
-          yKey: "target",
-          yName: "Target",
+          yKey: "totalSarathIncomes",
+          yName: "Sarath",
         },
         {
           type: "line",
           xKey: "month",
-          yKey: "achieve",
-          yName: "Achieve",
+          yKey: "totalDevikaIncomes",
+          yName: "Devika",
         },
       ],
     };

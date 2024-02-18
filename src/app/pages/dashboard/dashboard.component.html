@@ -1,10 +1,15 @@
 
 <section id="dashboard" class="p-4 max-w-full">
-  <div class="mb-4 text-sm poppins-regular text-color-1">Hi, Welcome Sarathchandran</div>
+    <div class="mb-4  flex items-center justify-between">
+      <span class="text-sm poppins-regular text-color-1">Hi, Welcome</span>
+      <div class="laptop:w-44 w-36 desktop:w-52">
+        <app-input-select (valueChanged)="changeUser($event)" [formCtrl]="userFormCtrl" [inputData]="userFormCtrlData"></app-input-select>
+      </div>
+    </div>
   <div
-    class="grid tablet:grid-cols-2 laptop:grid-cols-4 gap-4"
+    class="grid tablet:grid-cols-2 laptop:grid-cols-3 desktop:grid-cols-5 gap-4"
   >
-    @for (card of cardData; track card.id) {
+    @for (card of _transactionService.transactionSummaryCardData(); track card.id) {
       <app-card>
         <div class="px-2">
           <div>
@@ -52,17 +57,9 @@
         <app-card>
           <app-chart [chartOptions]="chartOptions"></app-chart>
         </app-card>
-        <app-card class="mt-4">
-          <div class="flex justify-end mb-2">
-            <app-button (onClick)="showPopup()">
-              <div class="flex items-center gap-1 ">
-                <span class="material-icons text-lg leading-none">add</span>
-                Add Transaction
-              </div>
-            </app-button>
-          </div>
 
-          <app-table></app-table>
+        <app-card class="mt-4">
+          <app-chart [chartOptions]="areaChartData"></app-chart>
         </app-card>
       </div>
       <div class="flex laptop:w-4/12 flex-col gap-4">
@@ -75,6 +72,16 @@
       </div>
     </div>
   </div>
+  <app-card class="mt-4">
+    <div class="flex justify-end mb-2">
+      <app-button (onClick)="showPopup()">
+        <div class="flex items-center gap-1 ">
+          <span class="material-icons text-lg leading-none">add</span>
+          Add Transaction
+        </div>
+      </app-button>
+    </div>
 
-
+    <app-table [tableCols]="transactionTableColumns" (addRecord)="showPopup()" [tableRows]="_transactionService.transactions()"></app-table>
+  </app-card>
 </section>

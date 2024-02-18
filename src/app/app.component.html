@@ -1,10 +1,17 @@
-<main class="h-full flex ">
- <app-sidenav class="laptop:block hidden"></app-sidenav>
-    <section class="flex-1 laptop:pl-sidenav-collapse max-w-full ">
-      <app-header class="fixed w-full z-30"></app-header>
-      <div class="container-margin-top">
+@if (_authorizationService.isLoggedIn()) {
+ <main class="h-full flex ">
+  <app-sidenav class="laptop:block hidden"></app-sidenav>
+    <section class="flex-1 page-wrapper h-full overflow-auto relative laptop:pl-sidenav-collapse max-w-full ">
+      <app-header class="sticky top-0 w-full z-30"></app-header>
+      <div >
         <router-outlet></router-outlet>
       </div>
     </section>
     <app-popup></app-popup>
-</main>
+  </main>
+} @else {
+  <main class="h-full flex items-center justify-center">
+    <router-outlet></router-outlet>
+  </main>
+}
+

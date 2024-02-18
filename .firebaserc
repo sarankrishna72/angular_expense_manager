@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "angular-expense-manager-56cce": {
+      "hosting": {
+        "expense-manager": [
+          "angular-expense-manager-56cce"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "angular-expense-manager-56cce"
+  }
+}

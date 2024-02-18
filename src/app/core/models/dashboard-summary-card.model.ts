@@ -13,7 +13,7 @@ export class DashboardSummaryCardModel {
   }
 
   getIncomePercentage(): number {
-    return (((this.currentMonth - this.lastMonth) / this.lastMonth))
+    return  this.lastMonth != 0 ? (((this.currentMonth - this.lastMonth) / this.lastMonth)) : 0;
   }
 
 }
