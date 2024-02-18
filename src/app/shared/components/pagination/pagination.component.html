@@ -1,0 +1,50 @@
+<div class="flex items-center justify-end gap-3 mt-2">
+  <div class="flex items-center gap-1">
+      <span class="text-color-8 text-[11px] poppins-light">Per Page</span>
+      <select [(ngModel)]="itemsPerPage" (ngModelChange)="currentPage = 1; updateItemsToShow()" class="border-[#ccd1e3] border rounded p-[2px] text-[11px]">
+        <option [value]="5">5</option>
+        <option [value]="10">10</option>
+        <option [value]="20">20</option>
+        <option [value]="30">30</option>
+        <option [value]="40">40</option>
+        <option [value]="50">50</option>
+      </select>
+  </div>
+  <div class="border-bdr-primary border-r-[1px] h-[20px] tablet:block hidden"></div>
+  <div class="tablet:flex items-center gap-1 hidden">
+    <span class="text-color-8 text-[11px] poppins-light">Jump to</span>
+     <select [(ngModel)]="currentPage" (ngModelChange)="updateItemsToShow()"  class="border-[#ccd1e3] border rounded p-[2px] text-[11px]">
+        @for ( page of pageNumberItems; track page) {
+          <option [value]="page">{{page}}</option>
+        }
+      </select>
+  </div>
+  <div class="flex gap-[2px] items-center">
+    <span class="material-icons text-lg font-light text-color-1 tablet:block hidden cursor-pointer" (click)="currentPage = 1; updateItemsToShow()" [ngClass]="{'pointer-events-none !text-color-8': currentPage == 1}">first_page</span>
+    <span class="material-icons text-lg font-light text-color-1 cursor-pointer " (click)="currentPage =  currentPage - 1; updateItemsToShow()" [ngClass]="{'pointer-events-none !text-color-8': currentPage == 1}">chevron_left</span>
+    <div class="flex">
+      @for ( page of startItems; track page){
+        <div class="text-[10px] poppins-regular rounded py-1 px-2 cursor-pointer text-color-9 " (click)="currentPage =  page; updateItemsToShow()" [ngClass]="{'bg-color-1 text-white': page == currentPage }">{{page}}</div>
+      }
+
+      @if (currentPage >3) {
+       <div class="text-[10px] poppins-regular rounded  py-1 px-2 cursor-pointer  text-color-9">...</div>
+      }
+
+      @if ( checkShowCurrentPageItem() ) {
+       <div class="text-[10px] poppins-regular rounded py-1 px-2 cursor-pointer bg-color-1 text-white " >{{currentPage }} </div>
+      }
+
+      @if ((currentPage < totalPages - 2)  && (startItems.length + endItems.length) != totalPages) {
+       <div class="text-[10px] poppins-regular rounded  py-1 px-2 cursor-pointer  text-color-9">...</div>
+      }
+
+      @for ( page of endItems; track page){
+        <div class="text-[10px] poppins-regular rounded py-1 px-2 cursor-pointer text-color-9 " (click)="currentPage =  page; updateItemsToShow()" [ngClass]="{'bg-color-1 text-white': page == currentPage }">{{page}}</div>
+      }
+    </div>
+    <span class="material-icons text-lg font-light text-color-1 cursor-pointer " (click)="currentPage =  currentPage + 1; updateItemsToShow()" [ngClass]="{'pointer-events-none !text-color-8': currentPage == totalPages}">chevron_right</span>
+    <span class="material-icons text-lg font-light text-color-1 tablet:block hidden cursor-pointer " (click)="currentPage = totalPages; updateItemsToShow()" [ngClass]="{'pointer-events-none !text-color-8': currentPage == totalPages}">last_page</span>
+  </div>
+
+</div>

@@ -1,0 +1,9 @@
+
+.notification-count {
+  &::after {
+    content: attr(data-count);
+  }
+}
+.nav-container {
+  background-image: linear-gradient(to bottom, #edf1fb, #f8f9fa);
+}

@@ -1,0 +1,4 @@
+<button [type]="type" [disabled]="disabled" [ngClass]="{'pointer-events-none opacity-70': disabled}" class="{{class}}   rounded p-2 ripple bg-color-1 text-[12px] poppins-regular text-white" (click)="onClick.emit(true)">
+  {{buttonLabel}}
+  <ng-content></ng-content>
+</button>

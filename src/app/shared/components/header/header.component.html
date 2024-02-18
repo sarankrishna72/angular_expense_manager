@@ -1,0 +1,20 @@
+<nav class="px-4 nav-container h-nav flex justify-between items-center  border-bdr-primary border-b bg-white">
+  <div class="text-color-5 poppins-semibold text-lg">MM Dashboard</div>
+  <ol class="flex justify-end gap-4">
+    <li class="p-1 flex items-center">
+      <div
+        class="notification-count relative after:flex after:text-[6px] after:font-semibold after:justify-center after:items-center after:absolute after:text-white after:bg-red-600 after:w-[14px] after:h-[14px] after:rounded-full after:top-[-3px] after:right-0 "
+        [attr.data-count]="25"
+      >
+        <img [src]="constImages.bell" class="w-[30px] h-[30px]" />
+      </div>
+    </li>
+    <li class="p-1 flex items-center">
+       <img [src]="constImages.male" class="h-[26px] w-[26px] "  />
+    </li>
+    <li class="border-bdr-primary border-r-[1px] h-10 w-[1px]"></li>
+    <li class="p-1 flex items-center">
+       <img [src]="constImages.menu_dots" class="h-5"  />
+    </li>
+  </ol>
+</nav>

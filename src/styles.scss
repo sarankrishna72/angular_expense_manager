@@ -1,1 +1,205 @@
 /* You can add global styles to this file, and also import other style files */
+/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+html, body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  background-image: linear-gradient(136deg, #f5f9fc 1%, #edf1fb 48%, #e8eefb 100%);
+}
+:root {
+  --primary-border: #d5dcef;
+  --secondary-border: #e8ebf6;
+  --nav-bar-height: 70px;
+  --side-nav-width-full: 200px;
+  --side-nav-width-collapse: 70px;
+  --primary-bg: #f7f9fa;
+  --bg-2: #d0dcea;
+  --text-color-1: #e13b56;
+  --text-color-2: #000000;
+  --text-color-3: #4b507b;
+  --text-color-4: #7280ac;
+  --text-color-5: #909aba;
+  --text-color-6: #2c4055;
+  --text-color-7: #3cc480;
+  --text-color-8: #6b7280;
+  --text-color-9: #808292;
+  --text-color-10: #717386;
+  --text-error: #e50404;
+}
+
+.container-margin-top {
+  margin-top: var(--nav-bar-height);
+}
+
+.poppins-thin {
+  font-family: "Poppins", sans-serif;
+  font-weight: 100;
+  font-style: normal;
+}
+
+.poppins-thin-italic {
+  font-family: "Poppins", sans-serif;
+  font-weight: 100;
+  font-style: italic;
+}
+
+.poppins-extralight {
+  font-family: "Poppins", sans-serif;
+  font-weight: 200;
+  font-style: normal;
+}
+
+.poppins-extralight-italic {
+  font-family: "Poppins", sans-serif;
+  font-weight: 200;
+  font-style: italic;
+}
+
+.poppins-light {
+  font-family: "Poppins", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.poppins-light-italic {
+  font-family: "Poppins", sans-serif;
+  font-weight: 300;
+  font-style: italic;
+}
+
+.poppins-regular {
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.poppins-regular-italic {
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.poppins-medium {
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.poppins-medium-italic {
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-style: italic;
+}
+
+.poppins-semibold {
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.poppins-semibold-italic {
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  font-style: italic;
+}
+
+.poppins-bold {
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.poppins-bold-italic {
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  font-style: italic;
+}
+
+.poppins-extrabold {
+  font-family: "Poppins", sans-serif;
+  font-weight: 800;
+  font-style: normal;
+}
+
+.poppins-extrabold-italic {
+  font-family: "Poppins", sans-serif;
+  font-weight: 800;
+  font-style: italic;
+}
+
+.poppins-black {
+  font-family: "Poppins", sans-serif;
+  font-weight: 900;
+  font-style: normal;
+}
+
+.poppins-black-italic {
+  font-family: "Poppins", sans-serif;
+  font-weight: 900;
+  font-style: italic;
+}
+
+.ripple {
+  background-position: center;
+  transition: background 0.8s;
+}
+.ripple:hover {
+  background:  var(--text-color-1) radial-gradient(circle, transparent 1%,  var(--text-color-1) 1%) center/15000%;
+}
+.ripple:active {
+  background-color: #0d0d0d04;
+  background-size: 100%;
+  transition: background 0s;
+}
+
+
+.Input_form_input:not(:focus)+.Input_form_label {
+    font-size: 13px;
+    z-index: 10;
+    pointer-events: none;
+}
+.Input_form_input:not(:placeholder-shown).Input_form_input:not(:focus)+.Input_form_label,
+.Input_form_input:focus+.Input_form_label {
+  top: 5px;
+  left: 12px;
+  font-size: 10px;
+  z-index: 10;
+
+}
+
+.Input_form_input:focus+.Input_form_label{
+  color: var(--text-color-1);
+}
+
+.Input_form_input:focus, .Input_form_input:not(:placeholder-shown) {
+  outline: none!important;
+  box-shadow: none;
+  outline-width: 0;
+  border-radius: 5px;
+  padding-top: 22px;
+}
+
+
+.Input_form_input {
+  display: flex;
+  outline: none!important;
+  outline-width: 0;
+}
+
+.page-wrapper::-webkit-scrollbar {
+    width: 4px;
+}
+
+.page-wrapper::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+
+.page-wrapper::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+}

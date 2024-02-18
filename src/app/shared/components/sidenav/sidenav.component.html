@@ -1,0 +1,15 @@
+<aside class="sidenav-container bg-white z-40 h-full fixed">
+  <div class="logo-container flex justify-center items-center p-4">
+    <img [src]="logo" class="w-[38px]" />
+  </div>
+  <ul >
+    @for (item of sidenavItems; track item.id) {
+      <li class="flex justify-start relative sidenav-item items-center p-3" [ngClass]="{'sidenav-active': item.id == 1}">
+        <img [src]="item.icon" class="w-[32px] mx-[7px] h-[32px] "/>
+        <div class="whitespace-nowrap flex items-center side-nav-item-label flex-1 text-sm overflow-hidden w-0 poppins-regular text-color-6 ">
+          {{item.name}}
+        </div>
+      </li>
+    }
+  </ul>
+</aside>
