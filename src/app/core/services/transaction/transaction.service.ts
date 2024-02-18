@@ -1,11 +1,11 @@
 import { Injectable, WritableSignal, computed, inject, signal } from '@angular/core';
 import { CollectionReference, Firestore, addDoc, collection, collectionData, deleteDoc, doc } from '@angular/fire/firestore';
 import { TRANSACTIONS_DB } from '../../data/firebase-databases';
-import * as _ from 'lodash';
 import moment from 'moment';
 import { DashboardSummaryCardModel } from '../../models/dashboard-summary-card.model';
 import { DEFAULT_DATA } from '../../data/transaction-form';
 import { TransactionModel } from '../../models/transaction.model';
+import { filter, groupBy, map, orderBy } from 'lodash';
 @Injectable({
   providedIn: 'root'
 })
@@ -22,7 +22,7 @@ export class TransactionService {
 
   transactionsGroupByMonth = computed(() => {
     if (this.transactions().length > 0) {
-      const groupedByMonth = _.groupBy(this.transactions(), (transaction: TransactionModel) => {
+      const groupedByMonth = groupBy(this.transactions(), (transaction: TransactionModel) => {
         return this.defaultMonthFormat((moment(transaction.transaction_date).startOf('month'))); // Group by year and month
       });
       return this.mapLastSixMonthsEmptyData(groupedByMonth);
@@ -118,10 +118,14 @@ export class TransactionService {
   getLastSixMonthsTransactions() {
     collectionData(this.transactionCollection, {}).subscribe(data => {
       const filterDataMonth = moment().subtract(6, 'months').startOf('month');
-      let transactions =  _.filter( _.map(_.orderBy(data, ['transaction_date'], ['desc']), (transaction: any) => new TransactionModel(transaction)), (transaction: TransactionModel) => {
-        const transactionDate = moment(transaction.transaction_date);
-        return transactionDate.isAfter(filterDataMonth);
-      });
+      let transactions =  filter(
+        map(
+          orderBy(data, ['transaction_date'], ['desc']), (transaction: any) => new TransactionModel(transaction)
+        ),
+        (transaction: TransactionModel) => {
+          const transactionDate = moment(transaction.transaction_date);
+          return transactionDate.isAfter(filterDataMonth);
+        });
       this.transactionsReadOnly.set(JSON.parse(JSON.stringify(transactions)))
       this.changeUserTransaction(this.transactionsUser())
     })
@@ -140,7 +144,7 @@ export class TransactionService {
     if (user == 'all') {
       this.transactions.set(JSON.parse(JSON.stringify(this.transactionsReadOnly())))
     } else {
-      const transactions = _.filter(JSON.parse(JSON.stringify(this.transactionsReadOnly())), { 'transaction_for': user })
+      const transactions = filter(JSON.parse(JSON.stringify(this.transactionsReadOnly())), { 'transaction_for': user })
       this.transactions.set(transactions);
     }
   }
