@@ -23,7 +23,7 @@ import { FormInputModel } from '../../core/models/form-input.model';
 import { InputSelectComponent } from '../../shared/components/forms/input-select/input-select.component';
 import { TransactionModel } from '../../core/models/transaction.model';
 import { sumBy, filter, map, groupBy } from 'lodash';
-
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-dashboard',
@@ -36,7 +36,7 @@ import { sumBy, filter, map, groupBy } from 'lodash';
     ChartComponent,
     TableComponent,
     ButtonComponent,
-    InputSelectComponent
+    InputSelectComponent,
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
@@ -149,7 +149,27 @@ export class DashboardComponent implements OnInit {
         this.showPopup(event.data);
       break;
       case 'delete':
-        this.showPopup();
+       Swal.fire({
+        title: `<div class="poppins-medium text-lg text-color-1">Are you sure, want to delete this transaction?</div>`,
+        reverseButtons: true,
+        confirmButtonColor: "var(--text-color-1)",
+        denyButtonColor: "var(--text-color-5)",
+        showDenyButton: true,
+        confirmButtonText: "Yes, Delete",
+        denyButtonText: `No`,
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          this._transactionService.deleteTransaction(event.data?.id).then((response) =>{
+            this._transactionService.getLastSixMonthsTransactions();
+            this._transactionService.showToast("Transaction deleted successfully", "success");
+          }).catch(() => {
+            this._transactionService.showToast("Something went wrong", "error");
+          })
+        } else if (result.isDenied) {
+          Swal.close();
+        }
+      });
       break;
       default:
         break;

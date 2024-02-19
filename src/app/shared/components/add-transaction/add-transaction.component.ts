@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, SimpleChanges } from '@angular/core';
 import { InputTextComponent } from '../forms/input-text/input-text.component';
 import { InputSelectComponent } from '../forms/input-select/input-select.component';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -8,7 +8,7 @@ import { ButtonComponent } from '../forms/button/button.component';
 import { InputTextareaComponent } from '../forms/input-textarea/input-textarea.component';
 import { TransactionService } from '../../../core/services/transaction/transaction.service';
 import { PopupStoreService } from '../popup/popup-store-service/popup-store.service';
-
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-add-transaction',
   standalone: true,
@@ -43,20 +43,39 @@ export class AddTransactionComponent {
     private _popupStoreService: PopupStoreService
   ) {
     this.form = this._formBuilder.group({})
-    this.generateFormControls();
   }
 
   onSubmitData(): void {
     let data = this.form.value;
     data['amount'] = parseFloat(data['amount']);
-    this._transactionService.addTransaction(
-      data
-    );
+    let actionPromise: Promise<any>;
+    if (this.editData) {
+      actionPromise = this._transactionService.updateTransaction(this.editData.id, data)
+    } else {
+      actionPromise = this._transactionService.addTransaction(data);
+    }
+
+   actionPromise.then((trans) => {
+      this._transactionService.getLastSixMonthsTransactions();
+      this._transactionService.showToast( this.editData ? "Transaction updated successfully" : "Transaction created successfully", "success");
+    }).catch((error) => {
+       this._transactionService.showToast("Something went wrong", "error");
+    });
     this._popupStoreService.dismiss()
   }
 
+
+
+
+
+  ngOnChanges(changes: SimpleChanges): void {
+    //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
+    //Add '${implements OnChanges}' to the class.
+    this.generateFormControls();
+
+  }
+
   generateFormControls():void {
-    console.log(this.editData)
     for (const formInput of this.formInputs) {
       this.form.addControl(formInput.id, new FormControl(this.editData?.[formInput.id] || formInput.value, [Validators.required]))
     }

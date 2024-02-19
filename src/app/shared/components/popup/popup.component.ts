@@ -24,7 +24,6 @@ export class PopupComponent implements OnInit{
   ) {
     this.popupEffect = effect(() => {
       if (this._popupStoreService.show()) {
-         console.log(this._popupStoreService.config()?.componentProps)
         if (this.model) {
           this.model.nativeElement.ownerDocument.body.style.overflow = 'hidden'
           this.model.nativeElement.style.display = "flex";

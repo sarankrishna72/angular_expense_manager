@@ -11,11 +11,13 @@ export class TransactionModel {
   location: string;
   amount: number;
   comment: string;
+  id: string
   amount_in_cad: string
   transaction_date_formatted: string
-  constructor({transaction_date = "", category_type ="", transaction_type = "", transaction_for = "", account_type = "", country = "", location = "", amount = 0, comment = ""}) {
+  constructor({transaction_date = "", category_type ="", id = "", transaction_type = "", transaction_for = "", account_type = "", country = "", location = "", amount = 0, comment = ""}) {
     this.transaction_date = transaction_date || '';
     this.category_type = category_type || '';
+    this.id = id || "";
     this.transaction_type = transaction_type || '';
     this.transaction_for = transaction_for || '';
     this.account_type = account_type || '';

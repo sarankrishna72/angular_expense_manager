@@ -1,11 +1,12 @@
 import { Injectable, WritableSignal, computed, inject, signal } from '@angular/core';
-import { CollectionReference, Firestore, addDoc, collection, collectionData, deleteDoc, doc } from '@angular/fire/firestore';
+import { CollectionReference, Firestore, addDoc, collection, collectionData, deleteDoc, doc, getDocs, updateDoc } from '@angular/fire/firestore';
 import { TRANSACTIONS_DB } from '../../data/firebase-databases';
 import moment from 'moment';
 import { DashboardSummaryCardModel } from '../../models/dashboard-summary-card.model';
 import { DEFAULT_DATA } from '../../data/transaction-form';
 import { TransactionModel } from '../../models/transaction.model';
 import { filter, groupBy, map, orderBy } from 'lodash';
+import Swal from 'sweetalert2';
 @Injectable({
   providedIn: 'root'
 })
@@ -116,29 +117,51 @@ export class TransactionService {
   constructor() {
   }
 
-  getLastSixMonthsTransactions() {
-    collectionData(this.transactionCollection, {}).subscribe(data => {
-      const filterDataMonth = moment().subtract(6, 'months').startOf('month');
-      let transactions =  filter(
-        map(
-          orderBy(data, ['transaction_date'], ['desc']), (transaction: any) => new TransactionModel(transaction)
-        ),
-        (transaction: TransactionModel) => {
-          const transactionDate = moment(transaction.transaction_date);
-          return transactionDate.isAfter(filterDataMonth);
-        });
-      this.transactionsReadOnly.set(JSON.parse(JSON.stringify(transactions)))
-      this.changeUserTransaction(this.transactionsUser())
-    })
+
+  showToast(message: string, toastType: any) {
+    const Toast = Swal.mixin({
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true
+    });
+    Toast.fire({
+      icon: toastType,
+      title: `<div class="poppins-medium text-[12px]">${message}</div>`,
+    });
   }
+
+  async getLastSixMonthsTransactions() {
+    const querySnapshot = await getDocs(this.transactionCollection);
+    const filterDataMonth = moment().subtract(6, 'months').startOf('month');
+    let transactions: any[] = []
+    querySnapshot.forEach((doc) => {
+      const document: any = doc.data();
+      const transactionDate = moment(document.transaction_date);
+      if (transactionDate.isAfter(filterDataMonth)) {
+        transactions.push(new TransactionModel({id: doc.id, ...document}))
+      }
+    })
+    transactions =  orderBy(transactions, ['transaction_date'], ['desc'])
+    this.transactionsReadOnly.set(JSON.parse(JSON.stringify(transactions)))
+    this.changeUserTransaction(this.transactionsUser())
+  }
+
 
   addTransaction(newTransaction:any) {
     return addDoc(this.transactionCollection, { ...newTransaction });
   }
 
-  async deleteTransaction(id: string) {
+  updateTransaction(id: string , data:any) {
     const docRef = doc(this.firestore, TRANSACTIONS_DB, id);
-    await deleteDoc(docRef);
+    return updateDoc(docRef, data)
+    // addDoc(this.transactionCollection, { ...newTransaction });
+  }
+
+  deleteTransaction(id: string) {
+    const docRef = doc(this.firestore, TRANSACTIONS_DB, id);
+    return deleteDoc(docRef);
   }
 
   changeUserTransaction(user: string): void {
