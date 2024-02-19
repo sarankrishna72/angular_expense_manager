@@ -12,11 +12,24 @@
         <tr class="relative">
           @for (tableCol of tableCols; track tableCol.key) {
             <td class="text-color-6 text-[12px] p-[10px] border border-bdr-secondary poppins-regular !font-medium" [ngClass]="{'sticky z-10 right-0  bg-white': tableCol?.pinColumn == 'right'}">
-              @if (tableCol.innerHtml) {
-                <div [innerHTML]="tableRow[tableCol.key]"></div>
+              @if(tableCol.key == 'actions') {
+                <div class="flex gap-2 items-center justify-start">
+                  @for ( action of tableCol.actions; track action) {
+                    <app-button class="!p-2 w-7 h-7 flex justify-center items-center" (onClick)="onTableCta(action, tableRow)">
+                      <span class="material-icons text-[12px] leading-none"> {{action}}</span>
+                    </app-button>
+                  }
+                </div>
+
+
               } @else {
-                {{tableRow[tableCol.key] || "--"}}
+                @if (tableCol.innerHtml) {
+                  <div [innerHTML]="tableRow[tableCol.key]"></div>
+                } @else {
+                  {{tableRow[tableCol.key] || "--"}}
+                }
               }
+
             </td>
           }
         </tr>
@@ -28,7 +41,7 @@
             <div class="flex justify-center items-center flex-col">
               <img src="https://app.optimizely.com/static/img/p13n/page-list-empty-state.svg" class="laptop:w-[250px] w-[180px]">
               <div class="mb-2 mt-2">No Data Found</div>
-              <app-button (onClick)="addRecordCTA()">
+              <app-button (onClick)="onTableCta('add', null)">
                 <div class="flex items-center gap-1 ">
                   <span class="material-icons text-lg leading-none">add</span>
                   Add Record

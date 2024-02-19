@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { InputTextComponent } from '../forms/input-text/input-text.component';
 import { InputSelectComponent } from '../forms/input-select/input-select.component';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -24,7 +24,7 @@ import { PopupStoreService } from '../popup/popup-store-service/popup-store.serv
 })
 export class AddTransactionComponent {
   form: FormGroup;
-
+  @Input() editData: any;
   formInputs: FormInputModel[] = [
     new FormInputModel("Transaction Date", "transaction_date",  'date', [], 'MM/DD/YYYY'),
     new FormInputModel("Category Type", "category_type", 'select', CategoryTypeData, 'Select Category Type', DEFAULT_DATA.FOOD),
@@ -56,8 +56,9 @@ export class AddTransactionComponent {
   }
 
   generateFormControls():void {
+    console.log(this.editData)
     for (const formInput of this.formInputs) {
-      this.form.addControl(formInput.id, new FormControl(formInput.value, [Validators.required]))
+      this.form.addControl(formInput.id, new FormControl(this.editData?.[formInput.id] || formInput.value, [Validators.required]))
     }
   }
 }

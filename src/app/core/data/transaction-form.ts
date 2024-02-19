@@ -26,6 +26,10 @@ export const DEFAULT_DATA: any = {
   CHEQUINGS: "Chequings",
   CREDIT_CARD: "Credit Card",
   SALARY: "Salary",
+  last_month: "Last Month",
+  last_2_months: "Last 2 Months",
+  last_3_months: "Last 3 Months",
+  last_4_months: "Last 4 Months"
 }
 
 export const CategoryTypeData: ListInterfaceModel[] = [
@@ -177,3 +181,11 @@ export const AccountTypeData: ListInterfaceModel[] = [
   //   id: DEFAULT_DATA.OTHER,
   //   name: DEFAULT_DATA.OTHER
   // }
+
+export const MonthList: ListInterfaceModel[] = [
+  {id: 'all', name: 'All'},
+  {id: DEFAULT_DATA.last_month, name: DEFAULT_DATA.last_month},
+  {id: DEFAULT_DATA.last_2_months, name: DEFAULT_DATA.last_2_months},
+  {id:  DEFAULT_DATA.last_3_months, name:  DEFAULT_DATA.last_3_months},
+  {id:  DEFAULT_DATA.last_4_months, name:  DEFAULT_DATA.last_4_months}
+]

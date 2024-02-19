@@ -17,7 +17,7 @@ import { ButtonComponent } from '../forms/button/button.component';
 export class TableComponent implements OnChanges{
   @Input() tableCols: any = [];
   @Input() tableRows: any = [];
-  @Output() addRecord: EventEmitter<any> = new EventEmitter();
+  @Output() tableActionsEvent: EventEmitter<any> = new EventEmitter();
   tableRowData: any[] = [];
   pageEventData: any;
 
@@ -28,8 +28,8 @@ export class TableComponent implements OnChanges{
     }
   }
 
-  addRecordCTA() {
-    this.addRecord.emit(true);
+  onTableCta(action: string, data: any): void {
+    this.tableActionsEvent.emit({action,  data});
   }
 
   ngOnChanges(changes: SimpleChanges): void {

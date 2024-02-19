@@ -1,10 +1,13 @@
 
 <section id="dashboard" class="p-4 max-w-full">
-    <div class="mb-4  flex items-center justify-between">
+    <div class="mb-4 max-tablet:flex-col gap-4 flex tablet:items-center tablet:justify-between">
       <span class="text-sm poppins-regular text-color-1">Hi, Welcome</span>
-      <div class="laptop:w-44 w-36 desktop:w-52">
-        <app-input-select (valueChanged)="changeUser($event)" [formCtrl]="userFormCtrl" [inputData]="userFormCtrlData"></app-input-select>
+      <div class="flex max-tablet:flex-col gap-4">
+        <div class="laptop:w-44 max-tablet:w-full tablet:w-44  desktop:w-52">
+          <app-input-select (valueChanged)="changeUser($event)" [formCtrl]="userFormCtrl" [inputData]="userFormCtrlData"></app-input-select>
+        </div>
       </div>
+
     </div>
   <div
     class="grid tablet:grid-cols-2 laptop:grid-cols-3 desktop:grid-cols-5 gap-4"
@@ -73,15 +76,27 @@
     </div>
   </div>
   <app-card class="mt-4">
-    <div class="flex justify-end mb-2">
-      <app-button (onClick)="showPopup()">
-        <div class="flex items-center gap-1 ">
-          <span class="material-icons text-lg leading-none">add</span>
-          Add Transaction
-        </div>
-      </app-button>
+    <div class="flex max-laptop:flex-col gap-4 laptop:justify-between mb-4">
+      <div class="flex flex-wrap ">
+        @for ( filter of filtersData; track filter.id) {
+          <div class=" min-w-[150px] p-2 tablet:w-[50%] laptop:w-[25%]">
+            <app-input-select [class]="'filter-bg'" (valueChanged)="setFilterData()" [form]="filterForm" [inputData]="filter"></app-input-select>
+          </div>
+
+        }
+
+      </div>
+      <div class="flex justify-end">
+         <app-button [class]="'h-[48px]  min-w-[150px]'" (onClick)="showPopup()">
+            <div class="flex items-center justify-center gap-1 ">
+              <span class="material-icons text-lg leading-none">add</span>
+              Add Transaction
+            </div>
+          </app-button>
+      </div>
+
     </div>
 
-    <app-table [tableCols]="transactionTableColumns" (addRecord)="showPopup()" [tableRows]="_transactionService.transactions()"></app-table>
+    <app-table [tableCols]="transactionTableColumns" (tableActionsEvent)="tableActionsCTA($event)" [tableRows]="tableData"></app-table>
   </app-card>
 </section>

@@ -3,7 +3,7 @@
 @if (form) {
   <div class="relative">
     <div class="relative w-full flex flex-col" [formGroup]="form">
-      <select [formControlName]="inputData.id" class="Input_form_input rounded w-full border poppins-regular  !pl-[10px] !pt-[18px] focus:border-color-1 border-bdr-primary h-12 z-10 relative outline-none p-3 text-[12px]" >
+      <select [formControlName]="inputData.id" (change)="changeValue($event)" class="{{class}} Input_form_input rounded w-full border poppins-regular  !pl-[10px] !pt-[18px] focus:border-color-1 border-bdr-primary h-12 z-10 relative outline-none p-3 text-[12px]" >
         @for ( opt of inputData.options; track opt.id) {
           <option [value]="opt.id">{{opt.name}}</option>
         }
@@ -15,7 +15,7 @@
 } @else {
    <div class="relative">
     <div class="relative w-full flex flex-col" >
-      <select [formControl]="formCtrl!" (change)="changeValue($event)" class="Input_form_input rounded w-full border poppins-regular  !pl-[10px] !pt-[18px] focus:border-color-1 border-bdr-primary h-12 z-10 relative outline-none p-3 text-[12px]" >
+      <select [formControl]="formCtrl!" (change)="changeValue($event)" class="{{class}} Input_form_input rounded w-full border poppins-regular  !pl-[10px] !pt-[18px] focus:border-color-1 border-bdr-primary h-12 z-10 relative outline-none p-3 text-[12px]" >
         @for ( opt of inputData.options; track opt.id) {
           <option [value]="opt.id">{{opt.name}}</option>
         }

@@ -16,6 +16,7 @@ import { CommonModule } from '@angular/common';
 export class InputSelectComponent {
   @Input() inputData! : FormInputModel;
   @Input() form ?: FormGroup;
+  @Input() class ?: string = '';
   @Input() formCtrl ?: FormControl;
   @Output() valueChanged: EventEmitter<any> = new EventEmitter();
 

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import * as _ from 'lodash';
 
@@ -13,7 +13,7 @@ import * as _ from 'lodash';
   templateUrl: './pagination.component.html',
   styleUrl: './pagination.component.scss'
 })
-export class PaginationComponent implements OnInit {
+export class PaginationComponent implements OnChanges {
 
   @Input() totalItems: any[] = [];
   @Output() pageEvent: EventEmitter<any> = new EventEmitter();
@@ -57,7 +57,11 @@ export class PaginationComponent implements OnInit {
     return (!this.endItems.includes(parseInt(this.currentPage)) && !this.startItems.includes(parseInt(this.currentPage)))
   }
 
-  ngOnInit() {
-    this.updateItemsToShow();
+  ngOnChanges(changes: SimpleChanges): void {
+    //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
+    //Add '${implements OnChanges}' to the class.
+    if (changes && changes['totalItems']) {
+      this.updateItemsToShow();
+    }
   }
 }

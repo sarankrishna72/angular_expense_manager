@@ -1,4 +1,5 @@
 export const  TRANSACTION_TABLE_COLUMNS = [
+
   {
     columnName: "Transaction Date",
     key: "transaction_date_formatted",
@@ -25,5 +26,10 @@ export const  TRANSACTION_TABLE_COLUMNS = [
     key: "amount_in_cad",
     innerHtml: true,
     pinColumn: "right"
-  }
+  }, {
+    columnName: "Actions",
+    key: "actions",
+    actions: ['edit', 'delete'],
+    pinColumn: "right"
+  },
 ]

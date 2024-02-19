@@ -18,6 +18,7 @@ export class TransactionService {
   ) as CollectionReference<any>;
   transactions: WritableSignal<TransactionModel[]> = signal([]);
   transactionsUser: WritableSignal<string> = signal('all');
+  transactionsMonth: WritableSignal<string> = signal('all');
   transactionsReadOnly: WritableSignal<TransactionModel[]> = signal([]);
 
   transactionsGroupByMonth = computed(() => {
@@ -148,6 +149,41 @@ export class TransactionService {
       this.transactions.set(transactions);
     }
   }
+
+  // changeMonthTransaction(month: string): void {
+  //   let startDate: any, endDate: any;
+  //   switch (month) {
+  //     case "all":
+  //       this.transactions.set(JSON.parse(JSON.stringify(this.transactionsReadOnly())))
+  //       return;
+  //     case DEFAULT_DATA.last_month:
+  //       startDate = moment().subtract(1, 'months').startOf('month').format('YYYY-MM-DD');
+  //       endDate = moment().subtract(1, 'months').endOf('month').format('YYYY-MM-DD');
+  //       break;
+  //     case DEFAULT_DATA.last_2_months:
+  //       startDate = moment().subtract(2, 'months').startOf('month').format('YYYY-MM-DD');
+  //       endDate = moment().subtract(2, 'months').endOf('month').format('YYYY-MM-DD');
+  //       break;
+  //     case DEFAULT_DATA.last_3_months:
+  //       startDate = moment().subtract(3, 'months').startOf('month').format('YYYY-MM-DD');
+  //       endDate = moment().subtract(3, 'months').endOf('month').format('YYYY-MM-DD');
+  //       break;
+  //     case DEFAULT_DATA.last_4_months:
+  //       startDate = moment().subtract(4, 'months').startOf('month').format('YYYY-MM-DD');
+  //       endDate = moment().subtract(4, 'months').endOf('month').format('YYYY-MM-DD');
+  //       break;
+  //     default:
+  //       this.transactions.set(JSON.parse(JSON.stringify(this.transactionsReadOnly())))
+  //       break;
+  //   }
+  //   if (startDate && endDate) {
+  //     let data = filter(JSON.parse(JSON.stringify(this.transactionsReadOnly())), (transaction: TransactionModel) => {
+  //       const transactionDate = moment(transaction.transaction_date);
+  //       return transactionDate.isBetween(startDate, endDate, null, '[]'); // '[]' includes the start and end dates
+  //     });
+  //       this.transactions.set(data);
+  //   }
+  // }
 
 }
 

@@ -203,3 +203,7 @@ body {
 .page-wrapper::-webkit-scrollbar-thumb {
   background-color: darkgrey;
 }
+
+.filter-bg {
+  background-image: linear-gradient( to bottom, #f5f6fa, #e1e4fc 100%);
+}
